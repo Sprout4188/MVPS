@@ -74,7 +74,7 @@ Rxjava+RxAndroid+Retrofit+OkHttp+Rxbus+Rxpermissions+Rxlifecycle+Rxbinding+Glide
 
 ## 三.架构原理
 
-![MVPS](https://git.songcw.com/songchechuxing/app_android/architecture-Android/raw/master/images/MVPS.png)
+![MVPS](https://github.com/Sprout4188/MVPS/blob/master/images/MVPS.png)
 
 a.UI层持有Section池的引用, 将业务切片委托给相应Section去处理
 
@@ -83,6 +83,8 @@ b.Section持有Presenter的引用, 将具体的业务实现委托给Presenter处
 c.Presenter将处理结果回调给View, 因Section实现了View接口, 故结果实质是回调给了Section
 
 d.Section拿到回调结果后, 去更新UI或者返回给组件调用方
+
+![相关生命周期先后调用关系](https://github.com/Sprout4188/MVPS/blob/master/images/Lifecycle.png)
 
 ## 四.使用示例
 
@@ -195,62 +197,3 @@ public interface LoginView extends IController.IView{
     void onLoginFail(String error);
 }
 ```
-
-
-
- ### 2.CC组件间通讯
-
-a.调用组件
-
-```java
-CC.obtainBuilder("ComponentLogin")
-	.setContext(getContext())
-  	.setActionName(Constant.action.ALogin)
-  	.build()
-  	.callAsync(new IComponentCallback() {
-  		@Override
-    		public void onResult(CC cc, CCResult result) {
-    			if (result.getCode() == CCResult.CODE_SUCCESS) {
-            			UserInfoEntity loginResult = result.getDataItem("loginSucc");
-            		} else {
-                		String errorMsg = result.getDataItem("loginFail");
-            		}
-       		}
-	});
-```
-
-b.组件接收
-
-```java
-public class ComponentLogin implements IComponent {
-    @Override
-    public String getName() {
-        return this.getClass().getSimpleName();
-    }
-
-    @Override
-    public boolean onCall(CC cc) {
-        String actionName = cc.getActionName();
-        if (Constant.action.ALogin.equals(actionName)) {
-            goLogin(cc);
-        } else {
-            CC.sendCCResult(cc.getCallId(), CCResult.error("CC找不到此Action = " + actionName));
-        }
-        // false: 组件同步实现（onCall方法执行完之前会将执行结果CCResult发送给CC）
-        // true: 组件异步实现（onCall方法执行完之后再将CCResult发送给CC，CC会持续等待组件调用CC.sendCCResult发送的结果，直至超时）
-        return true;
-    }
-
-    private void goLogin(CC cc) {
-        Context context = cc.getContext();
-        Intent intent = new Intent(context, LoginActivity.class);
-        if (!(context instanceof Activity)) {
-            //调用方没有设置context或app间组件跳转，context为application
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        }
-        intent.putExtra("ccCallId", cc.getCallId());
-        context.startActivity(intent);
-    }
-}
-```
-
