@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/margin_12"
+    android:paddingRight="@dimen/margin_12"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_new_detail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_18"
+        android:text=""
+        tools:text="ABCDEFG"
+        android:textColor="@color/color_000000"
+        android:textSize="@dimen/font_size_18"/>
+
+    <TextView
+        android:id="@+id/tv_new_detail_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_12"
+        tools:text="2018-09-11 13:30"
+        android:text=""
+        android:textColor="@color/color_A0A0A0"
+        android:textSize="@dimen/font_size_12" />
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_18"
+        android:visibility="visible"/>
+</LinearLayout>
