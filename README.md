@@ -72,11 +72,7 @@ public class MainActivity extends BaseActivity {
 
 Rxjava+RxAndroid+Retrofit+OkHttp+Rxbus+Rxpermissions+Rxlifecycle+Rxbinding+Glide+Logger+Multidex
 
-## 三.组件化方案
-
-CC传送门: [https://github.com/luckybilly/CC]
-
-## 四.架构原理
+## 三.架构原理
 
 ![MVPS](https://git.songcw.com/songchechuxing/app_android/architecture-Android/raw/master/images/MVPS.png)
 
@@ -88,7 +84,7 @@ c.Presenter将处理结果回调给View, 因Section实现了View接口, 故结�
 
 d.Section拿到回调结果后, 去更新UI或者返回给组件调用方
 
-## 五.使用示例
+## 四.使用示例
 
  ### 1.mvps使用
 
