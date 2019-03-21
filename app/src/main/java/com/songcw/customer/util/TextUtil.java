@@ -8,10 +8,6 @@ import android.widget.TextView;
 import com.songcw.basecore.BaseApp;
 import com.songcw.basecore.widget.nicetoast.Toasty;
 
-/**
- * @author linpengxian
- * @since 0.0.1
- */
 public class TextUtil {
 
     /**
@@ -20,7 +16,6 @@ public class TextUtil {
     public static Spanned suffixStar(String s) {
         String str = s + "<font color='#E7B24D'>*</font>";
         return Html.fromHtml(str);
-
     }
 
     /**
@@ -38,16 +33,5 @@ public class TextUtil {
             return false;
         }
         return true;
-    }
-
-
-
-    public static boolean checkPsd(String psd) {
-
-        String regex = "^(?=.*[a-zA-Z0-9].*)(?=.*[a-zA-Z\\W].*)(?=.*[0-9\\W].*).{8}$";
-
-        return psd.matches(regex);
-
-
     }
 }

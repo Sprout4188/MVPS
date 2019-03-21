@@ -48,7 +48,7 @@ public class ConfigSection extends BaseSection {
     }
 
     @Override
-    protected void initEvents() {
+    protected void init() {
         registerRadioGroupListener();
         registerPwdListener();
 

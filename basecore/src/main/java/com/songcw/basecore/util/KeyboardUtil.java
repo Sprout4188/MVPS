@@ -54,9 +54,6 @@ public class KeyboardUtil {
 
     /**
      * 再按一次是否在指定时间内
-     *
-     * @param limitTime
-     * @return
      */
     public static boolean isOverWhenPressAgain(long limitTime) {
         long lastPressTime = 0;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/color_background">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -11,78 +11,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.songcw.basecore.widget.bannerView.Banner
                 android:id="@+id/view_banner"
                 android:layout_width="match_parent"
                 android:layout_height="167dp"
-                app:image_scale_type="fit_xy"
-                app:delay_time="3000"/>
-
-            <LinearLayout
-                android:id="@+id/ll_grid_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_18"
-                android:orientation="vertical">
-
-                <GridView
-                    android:id="@+id/management_gridview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/margin_8"
-                    android:paddingBottom="@dimen/margin_8"
-                    android:numColumns="4"
-                    android:verticalSpacing="20dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_headline"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/item_height_50dp"
-                android:background="@color/white"
-                android:minHeight="@dimen/item_height_50dp"
-                android:layout_marginLeft="@dimen/margin_12"
-                android:layout_marginRight="@dimen/margin_12"
-                android:layout_marginTop="@dimen/margin_18"
-                android:paddingLeft="@dimen/margin_14"
-                android:paddingRight="@dimen/margin_14"
-                android:visibility="visible">
-
-                <ImageView
-                    android:layout_width="56dp"
-                    android:layout_height="@dimen/margin_14"
-                    android:src="@mipmap/ic_tou_tiao"
-                    android:layout_gravity="center_vertical"/>
-
-                <com.songcw.basecore.widget.textviewfliper.TextViewFlipper
-                    android:id="@+id/vf_headline"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/margin_12"
-                    android:layout_weight="1"
-                    android:autoStart="false"
-                    android:flipInterval="2500"
-                    android:inAnimation="@animator/anim_marquee_in"
-                    android:outAnimation="@animator/anim_marquee_out"/>
-
-                <TextView
-                    android:id="@+id/tv_headline_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:drawablePadding="@dimen/margin_5"
-                    android:drawableRight="@mipmap/ic_rightarrow_normal"
-                    android:text="@string/more"
-                    android:textColor="@color/color_707070"
-                    android:textSize="@dimen/font_size_13" />
-            </LinearLayout>
-
+                app:delay_time="3000"
+                app:image_scale_type="fit_xy"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

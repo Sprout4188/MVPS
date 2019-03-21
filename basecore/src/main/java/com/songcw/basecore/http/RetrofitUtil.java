@@ -123,6 +123,11 @@ public class RetrofitUtil {
                     hashMap.put(key, value);
                 }
                 oldJson = new Gson().toJson(hashMap);
+                oldJson = oldJson.replaceAll("\\\\", "");
+                oldJson = oldJson.replace("\"[", "[");
+                oldJson = oldJson.replace("]\"", "]");
+                oldJson = oldJson.replace("\"{", "{");
+                oldJson = oldJson.replace("}\"", "}");
             }
             //添加sign的Header
             String preSign = Config.Http.appKey.concat(oldJson).concat(Config.Http.appId).concat("UTF-8");
@@ -144,7 +149,7 @@ public class RetrofitUtil {
             if (oldRequest.body() instanceof MultipartBody) {   //文件上传
                 newRequest = newRequestBuilder.build();
             }
-            if(newRequest==null) throw new IllegalArgumentException("Request can not be null");
+            if (newRequest == null) throw new IllegalArgumentException("Request can not be null");
             return chain.proceed(newRequest);
         }
     }

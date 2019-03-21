@@ -26,6 +26,8 @@ dependencies {
     api rootProject.ext.dependencies["constraint-layout"]
     api rootProject.ext.dependencies["junit"]
 
+    api rootProject.ext.dependencies["butterknife"]
+    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     api rootProject.ext.dependencies["rxjava2"]
     api rootProject.ext.dependencies["rxandroid2"]
     api rootProject.ext.dependencies["rxbus"]
@@ -57,4 +59,5 @@ dependencies {
     api rootProject.ext.dependencies["PhotoView"]
     api rootProject.ext.dependencies["EasyPopup"]
     api rootProject.ext.dependencies["jsbridge"]
+    api rootProject.ext.dependencies["avi"]
 }

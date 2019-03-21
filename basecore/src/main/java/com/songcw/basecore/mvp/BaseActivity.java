@@ -18,10 +18,9 @@ import com.hwangjr.rxbus.RxBus;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.songcw.basecore.R;
 import com.songcw.basecore.event.JumpConfigBaseUrlEvent;
-import com.songcw.basecore.http.IInterceptor;
-import com.songcw.basecore.http.InterceptorUtil;
 import com.songcw.basecore.util.statusbar.StatusBarUtil;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +40,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     public String TAG = this.getClass().getSimpleName();
     public List<BaseSection> sections = new ArrayList<>();
     private Disposable disposable;
-    private IInterceptor interceptor;
 
     private LinearLayout llRoot;    //根布局
+    private AVLoadingIndicatorView loading;
     private View actionBar;         //标题栏布局
     private View contentView;       //内容布局
     private RelativeLayout rlBack;  //返回箭头
@@ -69,11 +68,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         setContentView(R.layout.activity_root);
         //设置标题栏
         llRoot = (LinearLayout) findViewById(R.id.ll_root);
+        loading = (AVLoadingIndicatorView) findViewById(R.id.avi);
         addActionBar(setMyActionBar());
         //设置内容布局
         addContentView(View.inflate(this, setContentLayout(), null));
         RxBus.get().register(this);
-        if (interceptor == null) interceptor = InterceptorUtil.defaultLoadingInterceptor(this);
         addSections();
         for (BaseSection section : sections) section.onCreate(savedInstanceState);
     }
@@ -220,9 +219,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         }
     }
 
-
     public void setTitleRightText(String msg) {
-
         if (msg != null) {
             txtRight.setText(msg);
             actionBar.setVisibility(View.VISIBLE);
@@ -236,32 +233,28 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * 显示标题栏右边图标
      */
     public void showRightIcon() {
-        if (rlRight != null)
-            rlRight.setVisibility(View.VISIBLE);
+        if (rlRight != null) rlRight.setVisibility(View.VISIBLE);
     }
 
     /**
      * 隐藏标题栏右边图标
      */
     public void hideRightIcon() {
-        if (rlRight != null)
-            rlRight.setVisibility(View.INVISIBLE);
+        if (rlRight != null) rlRight.setVisibility(View.INVISIBLE);
     }
 
     /**
      * 显示左边按钮
      */
     public void showBack() {
-        if (rlBack != null)
-            rlBack.setVisibility(View.VISIBLE);
+        if (rlBack != null) rlBack.setVisibility(View.VISIBLE);
     }
 
     /**
      * 隐藏后退箭头
      */
     public void hideBack() {
-        if (rlBack != null)
-            rlBack.setVisibility(View.INVISIBLE);
+        if (rlBack != null) rlBack.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -286,87 +279,73 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     }
 
     public void showLoading() {
-        if (interceptor != null)
-            interceptor.runOnStart();
+        if (loading != null) loading.show();
     }
 
     public void hideLoading() {
-        if (interceptor != null)
-            interceptor.runOnComplete();
+        if (loading != null) loading.hide();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        for (BaseSection section : sections)
-            section.onRestart();
+        for (BaseSection section : sections) section.onRestart();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        for (BaseSection section : sections)
-            section.onStart();
+        for (BaseSection section : sections) section.onStart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        for (BaseSection section : sections)
-            section.onResume();
+        for (BaseSection section : sections) section.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        for (BaseSection section : sections)
-            section.onPause();
+        for (BaseSection section : sections) section.onPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        for (BaseSection section : sections)
-            section.onStop();
+        for (BaseSection section : sections) section.onStop();
         hideLoading();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        for (BaseSection section : sections)
-            section.onDestroy();
-        if (disposable != null && !disposable.isDisposed())
-            disposable.dispose();
+        for (BaseSection section : sections) section.onDestroy();
+        if (disposable != null && !disposable.isDisposed()) disposable.dispose();
         RxBus.get().unregister(this);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        for (BaseSection section : sections)
-            section.onNewIntent(intent);
+        for (BaseSection section : sections) section.onNewIntent(intent);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        for (BaseSection section : sections)
-            section.onActivityResult(requestCode, resultCode, data);
+        for (BaseSection section : sections) section.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (BaseSection section : sections)
-            section.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (BaseSection section : sections) section.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        for (BaseSection section : sections)
-            section.onConfigurationChanged(newConfig);
+        for (BaseSection section : sections) section.onConfigurationChanged(newConfig);
     }
 }

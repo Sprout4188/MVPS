@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".main.mvp.view.MainActivity">
+    tools:context=".common.MainActivity">
 
     <com.songcw.basecore.widget.NoScrollViewPager
         android:id="@+id/vp_main"

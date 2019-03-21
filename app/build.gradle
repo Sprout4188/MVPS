@@ -24,4 +24,6 @@ android {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':basecore')
+    implementation 'com.jakewharton:butterknife:8.3.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.3.0'
 }

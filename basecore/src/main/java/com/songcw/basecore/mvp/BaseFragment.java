@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ public abstract class BaseFragment extends RxFragment {
     private List<BaseSection> sections = new ArrayList<>();
     private Disposable disposable;
 
+    private FrameLayout flRoot;    //根布局
     private LinearLayout llRoot;    //根布局
     private View actionBar;         //标题栏布局
     private View contentView;       //内容布局
@@ -52,7 +54,8 @@ public abstract class BaseFragment extends RxFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        llRoot = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.activity_root, null);
+        flRoot = (FrameLayout) LayoutInflater.from(getActivity()).inflate(R.layout.activity_root, null);
+        llRoot = (LinearLayout) flRoot.findViewById(R.id.ll_root);
         addActionBar(setMyActionBar());
         int contentLayoutRes = setContentLayout();
         if (contentLayoutRes <= 0) throw new IllegalArgumentException("Fragment找不到此布局ID");

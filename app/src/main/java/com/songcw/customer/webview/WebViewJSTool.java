@@ -25,7 +25,7 @@ import org.json.JSONObject;
  * Created by R-PC-07 on 2016/8/17.
  * webview 与js交互 工具类，注册了js需要调用的的多种接口和调用js的接口
  */
-public class WebViewJSTool implements BridgeBeanImpl{
+public class WebViewJSTool implements BridgeBeanImpl {
 
     private static final String TAG = "WebViewJSTool";
     private static final String GET_APP_INFO = "getAPPInfo";
@@ -50,11 +50,10 @@ public class WebViewJSTool implements BridgeBeanImpl{
 
     /**
      * js向app端发送事件参数
-     *  param:{
-     *      eventType:"business",// 例如：business(业务操作)
-     *      eventName:"orderStatusChange" //例如：处理订单状态改变业务
-     *  }
-     *
+     * param:{
+     * eventType:"business",// 例如：business(业务操作)
+     * eventName:"orderStatusChange" //例如：处理订单状态改变业务
+     * }
      */
     private static final String BROADCAST_EVENT_TO_APP = "broadcastEventToApp";
 
@@ -67,10 +66,9 @@ public class WebViewJSTool implements BridgeBeanImpl{
     protected ImageView mIVTopMore;
 
     private CallBackFunction mCallBackFunction;
-    private Handler mHandler = new Handler(){
-    };
+    private Handler mHandler = new Handler() {};
 
-    private int webViewLevel=0;
+    private int webViewLevel = 0;
 
     public WebViewJSTool(FragmentActivity activity) {
         this.mActivity = activity;
@@ -84,10 +82,8 @@ public class WebViewJSTool implements BridgeBeanImpl{
         this.bridgeWebView = bridgeWebView;
     }
 
-    private void intiBridgeWebview(){
-
+    private void intiBridgeWebview() {
         bridgeWebView.setDefaultHandler(new DefaultHandler());
-
         bridgeWebView.setWebChromeClient(new WebChromeClient() {
             @SuppressWarnings("unused")
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String AcceptType, String capture) {
@@ -103,13 +99,12 @@ public class WebViewJSTool implements BridgeBeanImpl{
             }
         });
 
-        bridgeWebView.callHandler(BRIDGE_TEST,"", new CallBackFunction() {
+        bridgeWebView.callHandler(BRIDGE_TEST, "", new CallBackFunction() {
             @Override
             public void onCallBack(String data) {
                 Logger.d(data);
             }
         });
-
         bridgeWebView.registerHandler(GET_APP_INFO, new BridgeHandler() {
             @Override
             public void handler(String data, CallBackFunction function) {
@@ -119,7 +114,6 @@ public class WebViewJSTool implements BridgeBeanImpl{
             }
 
         });
-
         bridgeWebView.registerHandler(GET_USER_INFO, new BridgeHandler() {
             @Override
             public void handler(String data, CallBackFunction function) {
@@ -132,14 +126,12 @@ public class WebViewJSTool implements BridgeBeanImpl{
             public void handler(String data, final CallBackFunction function) {
 
             }
-
         });
         bridgeWebView.registerHandler(SHARE, new BridgeHandler() {
             @Override
             public void handler(String data, CallBackFunction function) {
 
             }
-
         });
         bridgeWebView.registerHandler(SETUP_TOP_RIGHT_MENU_ITEMS, new BridgeHandler() {
             @Override
@@ -177,7 +169,6 @@ public class WebViewJSTool implements BridgeBeanImpl{
             @Override
             public void handler(String data, CallBackFunction function) {
             }
-
         });
         bridgeWebView.registerHandler(RELOAD, new BridgeHandler() {
             @Override
@@ -198,11 +189,8 @@ public class WebViewJSTool implements BridgeBeanImpl{
         bridgeWebView.registerHandler(CHOOSE_ADDRESS, new BridgeHandler() {
             @Override
             public void handler(String data, final CallBackFunction function) {
-                if(mCallBackFunction!=null){
-                    mCallBackFunction = null;
-                }
+                if (mCallBackFunction != null) mCallBackFunction = null;
                 mCallBackFunction = function;
-
             }
         });
 
@@ -219,11 +207,9 @@ public class WebViewJSTool implements BridgeBeanImpl{
 
             }
         });
-
     }
 
-    private void doCallBack(CallBackFunction function){
-
+    private void doCallBack(CallBackFunction function) {
         Gson gson = new Gson();
         String str = gson.toJson("");
         function.onCallBack(str);
@@ -231,24 +217,20 @@ public class WebViewJSTool implements BridgeBeanImpl{
 
     /**
      * 设置页面的标题
-     * @param data
      */
-    public void setTitle(TextView tv_top_title,String data){
+    public void setTitle(TextView tv_top_title, String data) {
         tv_top_title.setText(data);
     }
 
     /**
      * 隐藏或显示导航栏
-     * @param data
      */
-    public void setNavigationBarHidden(RelativeLayout mWebLayoutTitle,TextView tv_top_title,String data){
+    public void setNavigationBarHidden(RelativeLayout mWebLayoutTitle, TextView tv_top_title, String data) {
         try {
-            JSONObject object  = new JSONObject(data);
+            JSONObject object = new JSONObject(data);
             boolean hidden = object.optBoolean("hidden");
             boolean animated = object.optBoolean("animated");
-            if(hidden){
-                mWebLayoutTitle.setVisibility(View.GONE);
-            }
+            if (hidden) mWebLayoutTitle.setVisibility(View.GONE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -258,21 +240,17 @@ public class WebViewJSTool implements BridgeBeanImpl{
     /**
      * 关闭页面
      */
-    public void closePage(){
+    public void closePage() {
         mActivity.finish();
     }
 
     /**
      * 获取app信息
-     * @return
      */
-    public JSONObject getAppInfo(){
-
+    public JSONObject getAppInfo() {
         JSONObject finalObject = new JSONObject();
-
         return finalObject;
     }
-
 
     /**
      * 分享操作
@@ -281,7 +259,8 @@ public class WebViewJSTool implements BridgeBeanImpl{
 
     }
 
-    public void showPopMenuView(String data){
+    public void showPopMenuView(String data) {
+
     }
 
     public void setBridgeWebView(BridgeWebView bridgeWebView) {

@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.songcw.basecore.lifecycle.ButterKnifeLifecycle;
 import com.songcw.basecore.lifecycle.ILifecycle;
 import com.songcw.basecore.lifecycle.LifecycleManager;
 import com.songcw.basecore.lifecycle.RxBusLifecycle;
@@ -70,10 +71,8 @@ public abstract class BaseSection<P extends IController.IPresenter> implements I
     public abstract P onCreatePresenter();
 
     public View findView(@IdRes int id) {
-        if (decorView != null)
-            return decorView.findViewById(id);
-        else
-            throw new IllegalArgumentException(MSG_SOURCE);
+        if (decorView != null) return decorView.findViewById(id);
+        else throw new IllegalArgumentException(MSG_SOURCE);
     }
 
     /**
@@ -102,6 +101,15 @@ public abstract class BaseSection<P extends IController.IPresenter> implements I
      * 默认添加ButterKnife和RxBus生命周期
      */
     public void addDefaultLifecycle() {
+        BaseActivity view = null;
+        if (source instanceof Activity) {
+            view = ((BaseActivity) source);
+        } else if (source instanceof Fragment) {
+            view = (BaseActivity) ((Fragment) source).getActivity();
+        } else if (source instanceof android.app.Fragment) {
+            view = (BaseActivity) ((android.app.Fragment) source).getActivity();
+        }
+        if (view != null) addLifecycle(new ButterKnifeLifecycle(this, view));
         addLifecycle(new RxBusLifecycle(this));
     }
 
@@ -109,20 +117,22 @@ public abstract class BaseSection<P extends IController.IPresenter> implements I
         manager.onCreate();
         if (source instanceof Activity) {
             initViews();
-            initEvents();
+            init();
         }
     }
 
     public void onViewCreated(View view, Bundle state) {
         if (source instanceof Fragment || source instanceof android.app.Fragment) {
             initViews();
-            initEvents();
+            init();
         }
     }
 
-    protected abstract void initViews();
+    protected void initViews() {
 
-    protected abstract void initEvents();
+    }
+
+    protected abstract void init();
 
     protected void startActivity(Class<?> cls) {
         Intent intent = new Intent(getContext(), cls);
@@ -156,8 +166,7 @@ public abstract class BaseSection<P extends IController.IPresenter> implements I
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     }
 
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     }
 
     public void onConfigurationChanged(Configuration newConfig) {
@@ -222,7 +231,6 @@ public abstract class BaseSection<P extends IController.IPresenter> implements I
             throw new IllegalStateException(MSG_SOURCE);
         }
     }
-
 
     public Intent getIntent() {
         return ((BaseActivity) getContext()).getIntent();
