@@ -24,6 +24,7 @@ import okhttp3.RequestBody;
  */
 public abstract class BasePresenter<V extends IController.IView> implements IController.IPresenter {
     private final String MSG_ERROR = "view isn't instance of BaseSection and can't be null";
+    protected final String TAG = this.getClass().getSimpleName();
     protected V mView;
 
     public BasePresenter(V view) {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -66,6 +67,10 @@ public abstract class BaseSection<P extends IController.IPresenter> implements I
 
     public View getDecorView() {
         return decorView;
+    }
+
+    public Resources getResource() {
+        return getContext().getResources();
     }
 
     public abstract P onCreatePresenter();

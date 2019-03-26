@@ -18,6 +18,8 @@ import com.hwangjr.rxbus.RxBus;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.songcw.basecore.R;
 import com.songcw.basecore.event.JumpConfigBaseUrlEvent;
+import com.songcw.basecore.lifecycle.ButterKnifeLifecycle;
+import com.songcw.basecore.lifecycle.RxBusLifecycle;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import java.util.ArrayList;
@@ -48,7 +50,6 @@ public abstract class BaseFragment extends RxFragment {
 
     public void addSection(BaseSection section) {
         sections.add(section);
-        section.addDefaultLifecycle();
     }
 
     @Nullable
@@ -192,7 +193,11 @@ public abstract class BaseFragment extends RxFragment {
         super.onViewCreated(view, savedInstanceState);
         RxBus.get().register(this);
         addSections();
-        for (BaseSection section : sections) section.onViewCreated(view, savedInstanceState);
+        for (BaseSection section : sections) {
+            section.addLifecycle(new ButterKnifeLifecycle(section, view));
+            section.addLifecycle(new RxBusLifecycle(section));
+            section.onViewCreated(view, savedInstanceState);
+        }
     }
 
     protected abstract void addSections();
